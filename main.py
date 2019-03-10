@@ -1,52 +1,50 @@
 from random import randint
 
 class Entity:
-	def __init__(self, x, y, graphic, hp, cur_hp, damage):
+	def __init__(self, x, y, graphic):
 		self.x = x
 		self.y = y
 		self.graphic = graphic
 		self.direction = direction
 
-	def Player(Entity):
-		def __init__(self, x, y, graphic, hp, cur_hp, damage):
+	class Player(Entity):
+		def __init__(self, x, y, graphic):
 			Entity.__init__(self, x, y, graphic, hp, cur_hp, damage)
 			self.hp = hp
 			self.cur_hp = cur_hp
-		
-		def Position(self, x, y):
-			return Player.Position(x, y)
 	
-		def Move(self, x, y):
-			D = input("")
-			if D == "n":
-				return Player.Move(x, y+1)
-			elif D == "s":
-				return Player.Move(x, y-1)
-			elif D == "w":
-				return Player.Move(x-1, y)
-			elif D == "e":
-				return Player.Move(x+1, y)
-	
-	def Monster(Entity):
-		def __init__(self, x, y, graphic, hp, cur_hp, damage):
+	class Monster(Entity):
+		def __init__(self, x, y, graphic):
 			Entity.__init__(self, x, y, graphic, hp, cur_hp, damage)
-			
+
+class Level:
+	def __init__(self, w, h):
+    	self.w = w
+    	self.h = h
+    	self.entities = []
+
+  	def draw(self):
+    	for y in range(self.h):
+      		for x in range(self.w):
+       			for e in self.entities:
+          			if e.x == x and e.y == y:
+           				print("[{}]".format(e.graphic), end = "")
+            			break
+        			else:
+          				print("[ ]", end = "")
+
+      	print()
 	
-		def Position(self, x, y):
-			return Monster.Position(x, y)
+	def add_entities(self, entities):
+    	self.entities += entities
 
-		def Move(self, direction, damage):
-			d = random.randint(1, 4)
-			if d == 1:
-				return Monster.Move(x, y+1)
-			elif d == 2:
-				return Monster.Move(x, y-1)
-			elif d == 3:
-				return Monster.Move(x-1, y)
-			elif d == 4:
-				return Monster.Move(x+1, y)
+p = Player(1, 1, "P")
+m1 = Monster(3, 4, "M")
+m2 = Monster(4, 7, "M")
 
 
+level = Level(20, 20)
 
+level.add_entities([player, monster])
 
-#------------------------------------------------------------------
+level.draw()
